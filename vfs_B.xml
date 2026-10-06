@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vfs name="vfs_B">
+    <dir name="/">
+        <file name="junk.txt" content="VGhpcyBpcyBhIGp1bmsgZmlsZQ=="/>
+        <dir name="test1">
+            <dir name="test1_2">
+                <dir name="junk">
+                    <file name="passwords.txt" content="dHJpY2tlZCB5b3U="/>
+                </dir>
+            </dir>
+        </dir>
+        <dir name="test2">
+            <dir name="test2_1">
+                <dir name="unjunk">
+                    <file name="not_a_junk.txt" content="VEhJUyBJUyBOT1QgQSBKVU5LISEh"/>
+                </dir>
+            </dir>
+        </dir>
+    </dir>
+</vfs>

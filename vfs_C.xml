@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vfs name="vfs_C">
+    <dir name="/">
+        <dir name="A">
+            <file name="a.txt" content="QSBkYXRhDQpBMiBkYXRhDQpBMyBkYXRh"/>
+            <dir name="B">
+                <file name="b.txt" content="QiBkYXRhDQpqdW5rMQ0KanVuazINCmp1bmszDQpqdW5rNA0KanVuazUNCmp1bms2DQpqdW5rNw0KanVuazgNCmp1bms5DQpqdW5rMA=="/>
+                <dir name="C">
+                    <file name="c.txt" content="QyBkYXRh"/>
+                    <dir name="D">
+                        <file name="d.txt" content="RCBkYXRh"/>
+                    </dir>
+                </dir>
+            </dir>
+        </dir>
+    </dir>
+</vfs>
