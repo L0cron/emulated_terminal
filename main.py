@@ -2,13 +2,13 @@ import customtkinter as ctk
 import subprocess
 import pathlib
 import time
-# for username and hostname
+"""for username and hostname"""
 import getpass
 import socket
 import platform
 
 import base64
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as et
 
 ctk.set_appearance_mode("dark")
 
@@ -20,16 +20,16 @@ class Terminal(ctk.CTk):
     is_vfs = False
     vfs_path = ""
     
-    VFS = {}
+    vfs = {}
     vfs_name = ""
 
     def get_current_vfs_dir(self) -> dict:
-        if self.directory == "/": return self.VFS["/"]
+        if self.directory == "/": return self.vfs["/"]
 
         parts = self.directory.split("/")[1:]
         try:
             
-            t = self.VFS["/"]
+            t = self.vfs["/"]
             for i in parts:
                 t = t["children"][i]
 
@@ -39,7 +39,7 @@ class Terminal(ctk.CTk):
 
 
     def read_vfs(self, vfs_path: str):
-        tree = ET.parse(vfs_path)
+        tree = et.parse(vfs_path)
         root = tree.getroot()
         self.vfs_name = root.get("name")
 
@@ -59,7 +59,7 @@ class Terminal(ctk.CTk):
                     "content": base64.b64decode(b64_content).decode("utf-8"),
                 }
 
-        self.VFS = {child.get("name"): parse_element(child) for child in root}
+        self.vfs = {child.get("name"): parse_element(child) for child in root}
 
     def __init__(self, vfs_path="", start_script=""):
         super().__init__()
@@ -90,7 +90,7 @@ class Terminal(ctk.CTk):
         self.terminal._textbox.tag_config("green_bold", foreground="#39FF14", font=("Courier New", 10, "bold"))
                         
         self.terminal.tag_config("white", foreground="#FFFFFF")
-        self.terminal._textbox.tag_config("white_bold", foreground="#FFFFFF", font=("Courier New", 10, "bold"))
+        self.terminal._textbox.tag_config("white_bold",foreground="#FFFFFF", font=("Courier New", 10, "bold"))
 
         self.terminal.tag_config("red", foreground="#FF3333")
         
@@ -367,9 +367,12 @@ if __name__ == "__main__":
 
     vfs_path = None
     start_script = None
-    if len(args) > 1:
+
+    stupid_const_variable_one = 1
+    stupid_const_variable_two = 2
+    if len(args) > stupid_const_variable_one:
         vfs_path = args[1]
-    if len(args) > 2:
+    if len(args) > stupid_const_variable_two:
         start_script = args[2]
 
     app = Terminal(vfs_path=vfs_path, start_script=start_script)
