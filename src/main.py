@@ -185,6 +185,15 @@ class Terminal(ctk.CTk):
         self.print_to_console("Unknown command, type 'help' for help.")
         return False
 
+    def command_help(self) -> bool:
+        self.print_to_console("Terminal ver 1.0")
+        self.print_to_console("Available commands:")
+        self.print_to_console("- help \t: prints help menu")
+        self.print_to_console("- cd \t: changes current directory")
+        self.print_to_console("- ls \t: lists files and directories in current")
+        self.print_to_console("- pwd \t: prints absolute path for current directory")
+        self.print_to_console("- exit \t: disintegrate app")
+        return True
 
     def send_command(self) -> bool:
         self.print_to_console("")
