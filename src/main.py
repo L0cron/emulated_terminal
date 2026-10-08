@@ -2,7 +2,6 @@ import customtkinter as ctk
 import subprocess
 import pathlib
 import time
-"""for username and hostname"""
 import getpass
 import socket
 import platform
@@ -75,9 +74,6 @@ class Terminal(ctk.CTk):
 
         self.terminal = ctk.CTkTextbox(self, width=680, height=300,
             font=("Courier New", 14) ,text_color="#FFFFFF")
-        """
-        self.terminal._textbox.configure()
-        """
         self.terminal.pack(pady=10, padx=10, fill="both", expand=True)
         self.terminal._textbox.configure(insertbackground="#FFFFFF",
             fg="#FFFFFF", state="disabled")
@@ -117,7 +113,6 @@ class Terminal(ctk.CTk):
             self.terminal.bind("<MouseWheel>", self.on_mouse_wheel)
 
         self.propmt = ""
-        """это кушает все обработчики событий"""
         self.terminal._textbox.bindtags((self.terminal._textbox, self, "all"))
         self.terminal.bind("<Key>",self.key_grabber)
         self.terminal.focus_force()
@@ -202,7 +197,6 @@ class Terminal(ctk.CTk):
             r = self.execute(parts[0],args)
 
 
-        """Finished all sequences"""
 
         self.propmt = ""
         self.line_starter()
@@ -246,11 +240,8 @@ class Terminal(ctk.CTk):
                 self.print_to_console(p["children"][f]["content"])
                 return True
             else:
-                """file does not exist"""
                 return False 
         else:
-            """на этом этапе мне стало лень делать
-            функционал функций не для vfs"""
             pass
         return False
 
@@ -269,20 +260,16 @@ class Terminal(ctk.CTk):
                 self.print_to_console(data)
                 return True
             else:
-                """file does not exist"""
                 return False 
         else:
-            """на этом этапе мне стало лень делать
-            функционал функций не для vfs"""
             pass
         return False
 
     def command_cd(self,args) -> bool:
-        if len(args) == 0:
-            return
+        if len(args) == 0: return
         started = self.directory
         d = args[0]
-        if self.is_vfs: # VFS
+        if self.is_vfs: 
             if d == "/":
                 self.directory = "/"
                 return True
@@ -299,8 +286,6 @@ class Terminal(ctk.CTk):
                         c = c + "/" + i
                 if c == "": c = "/"
                 self.directory = c.replace("//","/")
-                    
-            
             p = self.get_current_vfs_dir()
             if not p:
                 self.directory = started
@@ -308,21 +293,8 @@ class Terminal(ctk.CTk):
                 return False
             return True
 
-        """
-        else:
-            file = pathlib.Path(self.directory, d)
-            if file.exists():
-                self.directory = file.resolve()
-            else:
-                abs_path = pathlib.Path(d)
-                if file.exists():
-                    self.directory = abs_path.resolve()
-                else:
-                    self.print_to_console(f"{abs_path.resolve()} not found")
-        """
 
     def command_ls(self) -> bool:
-
         if self.is_vfs:
             dir = self.get_current_vfs_dir()
             for file in dir["children"]:    
@@ -338,7 +310,10 @@ class Terminal(ctk.CTk):
                 col = "white_bold"
                 if file.is_dir():
                     col = "blue_bold"
-                f = file.name if file.name.find(" ") == -1 else f"\"{file.name}\""
+                if file.name.find(" ") == -1:
+                    f = file.name     
+                else:
+                    f"\"{file.name}\""
                 self.terminal.insert("end", f+" ",col)
             if len(dir["children"]) > 0:
                 self.print_to_console("")
