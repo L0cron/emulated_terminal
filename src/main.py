@@ -73,10 +73,14 @@ class Terminal(ctk.CTk):
             self.command_vfs_init()
         self.geometry("700x400")
 
-        self.terminal = ctk.CTkTextbox(self, width=680, height=300, font=("Courier New", 14) ,text_color="#FFFFFF")
-        # self.terminal._textbox.configure()
+        self.terminal = ctk.CTkTextbox(self, width=680, height=300,
+            font=("Courier New", 14) ,text_color="#FFFFFF")
+        """
+        self.terminal._textbox.configure()
+        """
         self.terminal.pack(pady=10, padx=10, fill="both", expand=True)
-        self.terminal._textbox.configure(insertbackground="#FFFFFF", fg="#FFFFFF", state="disabled")
+        self.terminal._textbox.configure(insertbackground="#FFFFFF",
+            fg="#FFFFFF", state="disabled")
         self.terminal_tags()
 
         self.line_starter()
@@ -87,18 +91,22 @@ class Terminal(ctk.CTk):
 
     def terminal_tags(self):
         self.terminal.tag_config("green", foreground="#39FF14")
-        self.terminal._textbox.tag_config("green_bold", foreground="#39FF14", font=("Courier New", 10, "bold"))
+        self.terminal._textbox.tag_config("green_bold",
+            foreground="#39FF14", font=("Courier New", 10, "bold"))
                         
         self.terminal.tag_config("white", foreground="#FFFFFF")
-        self.terminal._textbox.tag_config("white_bold",foreground="#FFFFFF", font=("Courier New", 10, "bold"))
+        self.terminal._textbox.tag_config("white_bold",
+            foreground="#FFFFFF", font=("Courier New", 10, "bold"))
 
         self.terminal.tag_config("red", foreground="#FF3333")
         
         self.terminal.tag_config("cyan", foreground="#00FFFF")
-        self.terminal._textbox.tag_config("cyan_bold", foreground="#00FFFF", font=("Courier New", 10, "bold"))
+        self.terminal._textbox.tag_config("cyan_bold",
+            foreground="#00FFFF", font=("Courier New", 10, "bold"))
         
         self.terminal.tag_config("blue", foreground="#4E89FF")
-        self.terminal._textbox.tag_config("blue_bold", foreground="#4E89FF", font=("Courier New", 10, "bold"))
+        self.terminal._textbox.tag_config("blue_bold",
+            foreground="#4E89FF", font=("Courier New", 10, "bold"))
 
         current_os = platform.system()
 
@@ -109,15 +117,18 @@ class Terminal(ctk.CTk):
             self.terminal.bind("<MouseWheel>", self.on_mouse_wheel)
 
         self.propmt = ""
-        self.terminal._textbox.bindtags((self.terminal._textbox, self, "all")) # это кушает все обработчики событий
+        """это кушает все обработчики событий"""
+        self.terminal._textbox.bindtags((self.terminal._textbox, self, "all"))
         self.terminal.bind("<Key>",self.key_grabber)
         self.terminal.focus_force()
 
     def on_mouse_wheel(self, event):
         scroll_speed = 2
-        if event.num == 4 or event.delta > 0:
+        sc_var_four = 4
+        sc_var_five = 5
+        if event.num == sc_var_four or event.delta > 0:
             self.terminal.yview_scroll(-scroll_speed, "units")
-        elif event.num == 5 or event.delta < 0:
+        elif event.num == sc_var_five or event.delta < 0:
             self.terminal.yview_scroll(scroll_speed, "units")
             
 
@@ -159,36 +170,25 @@ class Terminal(ctk.CTk):
 
     def execute(self, command, args) -> bool:
         if command == "help":
-            self.print_to_console("Terminal ver 1.0")
-            self.print_to_console("Available commands:")
-            self.print_to_console("- help \t: prints help menu")
-            self.print_to_console("- cd \t: changes current directory")
-            self.print_to_console("- ls \t: lists files and directories in current")
-            self.print_to_console("- pwd \t: prints absolute path for current directory")
-            self.print_to_console("- exit \t: disintegrate app")
-            if self.is_vfs:
-                self.print_to_console("- vfs-init \t: clears current VFS to initial state")
-            return True
-        elif command == "pwd":
-            self.print_to_console(self.directory)
-            return True
-        elif command == "exit":
-            exit()
-        elif command == "cd":
-            return self.command_cd(args)
-        elif command == "ls" or command == "dir":
-            return self.command_ls()
-        elif command == "vfs-init":
-            return self.command_vfs_init()
-        elif command == "tail":
-            return self.command_tail(args)
-        elif command == "cat":
-            return self.command_cat(args)
-        elif command == "mkdir":
-            return self.command_mkdir(args)
-        else:
-            self.print_to_console("Unknown command, type 'help' for help.")
-            return False
+            return self.command_help()
+
+        commands_map = {
+            "pwd": lambda: (self.print_to_console(self.directory), True)[1],
+            "exit": exit,
+            "cd": lambda: self.command_cd(args),
+            "ls": self.command_ls,
+            "dir": self.command_ls,
+            "vfs-init": self.command_vfs_init,
+            "tail": lambda: self.command_tail(args),
+            "cat": lambda: self.command_cat(args),
+            "mkdir": lambda: self.command_mkdir(args),
+        }
+
+        if command in commands_map:
+            return commands_map[command]()
+
+        self.print_to_console("Unknown command, type 'help' for help.")
+        return False
 
 
     def send_command(self) -> bool:
@@ -202,7 +202,7 @@ class Terminal(ctk.CTk):
             r = self.execute(parts[0],args)
 
 
-        # Finished all sequences
+        """Finished all sequences"""
 
         self.propmt = ""
         self.line_starter()
@@ -246,10 +246,12 @@ class Terminal(ctk.CTk):
                 self.print_to_console(p["children"][f]["content"])
                 return True
             else:
-                return False # file does not exist
+                """file does not exist"""
+                return False 
         else:
+            """на этом этапе мне стало лень делать
+            функционал функций не для vfs"""
             pass
-            # на этом этапе мне стало лень делать функционал функций не для vfs
         return False
 
     def command_tail(self,args) -> bool:
@@ -267,10 +269,12 @@ class Terminal(ctk.CTk):
                 self.print_to_console(data)
                 return True
             else:
-                return False # file does not exist
+                """file does not exist"""
+                return False 
         else:
+            """на этом этапе мне стало лень делать
+            функционал функций не для vfs"""
             pass
-            # на этом этапе мне стало лень делать функционал функций не для vfs
         return False
 
     def command_cd(self,args) -> bool:
@@ -304,7 +308,8 @@ class Terminal(ctk.CTk):
                 return False
             return True
 
-        else: # ACTUAL
+        """
+        else:
             file = pathlib.Path(self.directory, d)
             if file.exists():
                 self.directory = file.resolve()
@@ -314,6 +319,7 @@ class Terminal(ctk.CTk):
                     self.directory = abs_path.resolve()
                 else:
                     self.print_to_console(f"{abs_path.resolve()} not found")
+        """
 
     def command_ls(self) -> bool:
 
