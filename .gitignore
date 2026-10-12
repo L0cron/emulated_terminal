@@ -1,2 +1,3 @@
 ./*.txt
-.venv
+*/venv
+src/task2/installed/*
