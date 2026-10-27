@@ -7,7 +7,10 @@ import requests
 class Packet_manager():
     packets = []
     command = ""
-    download_repo = "https://github.com/L0cron/emulated_terminal.git"
+    download_repo = "https://raw.githubusercontent.com/L0cron/emulated_terminal/main/src/task2/index.json"
+
+    manifests = {}
+    indexes = {}
 
     is_ASCII = False
     mode = "?"
@@ -50,20 +53,27 @@ class Packet_manager():
             case "install": self.install_packets()
             case "uninstall": self.uninstall_packets()
             case "help": self.help()
-            case "": print("No command specified. Need help? Type --help")
+            case "": print("No command specified. Need help? Run with --help")
             case _:print("Unknown command specified:",
                     self.command,"\nProgram will exit now.")
 
+    def update_indexes(self):
+        print(f"    Updating {self.download_repo} index")
+        r = requests.get(self.download_repo,timeout=10)
+        r.raise_for_status()
+        self.indexes = r.json()
+        print(self.indexes)
+        print(f"    Updated indexes successfully")
+
     def install_packets(self):
-        print("You chose to install packets")
-        pass
+        self.update_indexes()
 
     def uninstall_packets(self):
-        print("You chose to uninstall packets")
+        self.update_indexes()
 
     def help(self):
         print("\n  Pacman manual\n")
-        print("    pacman [COMMAND] [PACKETS] (OPTIONAL FLAGS)\n")
+        print("\t  pacman [COMMAND] [PACKETS] (OPTIONAL FLAGS)\n")
         print("\tCommands:")
         print("\tinstall \t- installs specified packet(s)")
         print("\tuninstall \t- uninstalls specified packet(s)")
@@ -86,6 +96,8 @@ if __name__ == "__main__":
                 flag_key = ""
             else:
                 args.append(arg)
+    if flag_key:
+        flags[flag_key] = ""
 
     print("Your inputs are: "," ".join(args))
     print("Your flags are: ",str(flags))

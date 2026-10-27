@@ -1,0 +1,6 @@
+binwalk[1.16]
+iplist[1.8]
+path-utils[>=1.39]
+reqwest[1.23]
+random[>=1.19]
+manip[1.25]

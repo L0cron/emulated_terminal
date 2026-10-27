@@ -1,0 +1,7 @@
+binwalk[1.32]
+random[1.27]
+manip[1.22]
+reqwest[1.10]
+path-utils[1.30]
+test-tools[>=1.34]
+iplist[>=1.14]

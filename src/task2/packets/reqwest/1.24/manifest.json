@@ -1,0 +1,49 @@
+{
+    "1.24": [
+        {
+            "file": "dependencies.txt",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\dependencies.txt",
+            "size": "0"
+        },
+        {
+            "file": "junk0.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\junk0.bin",
+            "size": "35605"
+        },
+        {
+            "file": "junk1.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\junk1.bin",
+            "size": "35124"
+        },
+        {
+            "file": "junk2.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\junk2.bin",
+            "size": "18429"
+        },
+        {
+            "file": "junk3.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\junk3.bin",
+            "size": "46561"
+        },
+        {
+            "file": "junk4.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\junk4.bin",
+            "size": "28479"
+        },
+        {
+            "file": "junk5.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\junk5.bin",
+            "size": "22786"
+        },
+        {
+            "file": "junk6.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\junk6.bin",
+            "size": "12632"
+        },
+        {
+            "file": "manifest.json",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\reqwest\\1.24\\manifest.json",
+            "size": "1851"
+        }
+    ]
+}

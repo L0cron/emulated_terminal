@@ -1,0 +1,4 @@
+binwalk[1.0]
+manip[1.16]
+iplist[>=1.8]
+path-utils[1.19]

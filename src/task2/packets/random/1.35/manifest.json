@@ -1,0 +1,39 @@
+{
+    "1.35": [
+        {
+            "file": "dependencies.txt",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\random\\1.35\\dependencies.txt",
+            "size": "0"
+        },
+        {
+            "file": "junk0.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\random\\1.35\\junk0.bin",
+            "size": "47152"
+        },
+        {
+            "file": "junk1.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\random\\1.35\\junk1.bin",
+            "size": "42179"
+        },
+        {
+            "file": "junk2.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\random\\1.35\\junk2.bin",
+            "size": "11153"
+        },
+        {
+            "file": "junk3.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\random\\1.35\\junk3.bin",
+            "size": "14606"
+        },
+        {
+            "file": "junk4.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\random\\1.35\\junk4.bin",
+            "size": "5586"
+        },
+        {
+            "file": "manifest.json",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\random\\1.35\\manifest.json",
+            "size": "1441"
+        }
+    ]
+}

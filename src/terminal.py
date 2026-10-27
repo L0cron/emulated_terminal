@@ -5,6 +5,7 @@ import time
 import getpass
 import socket
 import platform
+from threading import Thread
 
 import base64
 import xml.etree.ElementTree as et
@@ -64,13 +65,15 @@ class Terminal(ctk.CTk):
         super().__init__()
         username = getpass.getuser()
         hostname = socket.gethostname()
-
+        self.proc = None
+        self.history = []
+        self.hist_pointer = -1
         if not vfs_path:
             self.title(f"Terminal [{username}@{hostname}]")
-            self.directory = str(pathlib.Path(self.directory).resolve())
+            self.directory = str(pathlib.Path(__file__, "..").resolve())
         else:
             self.command_vfs_init()
-        self.geometry("700x400")
+        self.minsize(700,400)
 
         self.terminal = ctk.CTkTextbox(self, width=680, height=300,
             font=("Courier New", 14) ,text_color="#FFFFFF")
@@ -104,18 +107,48 @@ class Terminal(ctk.CTk):
         self.terminal._textbox.tag_config("blue_bold",
             foreground="#4E89FF", font=("Courier New", 10, "bold"))
 
-        current_os = platform.system()
+        self.current_os = platform.system()
 
-        if current_os == "Linux":
+        self.prompt = ""
+        self.terminal._textbox.bindtags((self.terminal._textbox, self, "all"))
+        self._app_binds()
+
+    def _app_binds(self):
+        self.bind("<Up>",self.on_arrow_up)
+        self.bind("<Down>",self.on_arrow_down)
+        if self.current_os == "Linux":
             self.terminal.bind("<Button-4>", self.on_mouse_wheel)
             self.terminal.bind("<Button-5>", self.on_mouse_wheel)
         else:
             self.terminal.bind("<MouseWheel>", self.on_mouse_wheel)
-
-        self.propmt = ""
-        self.terminal._textbox.bindtags((self.terminal._textbox, self, "all"))
         self.terminal.bind("<Key>",self.key_grabber)
         self.terminal.focus_force()
+
+    def on_arrow_up(self,e):
+        if self.hist_pointer == -1:
+            self.hist_pointer = len(self.history)-1
+        else:
+            if self.hist_pointer > 0:
+                self.hist_pointer = self.hist_pointer -1
+            else: return
+        self.terminal.delete(f"end - {len(self.prompt)+1} chars", "end-1c")
+        self.prompt = self.history[self.hist_pointer]
+        self.paste_command(self.prompt)
+        
+
+    def on_arrow_down(self,e):
+        if self.hist_pointer == -1: return
+        
+        if self.hist_pointer < len(self.history)-1:
+            self.hist_pointer = self.hist_pointer + 1
+            self.terminal.delete(f"end - {len(self.prompt)+1} chars", "end-1c")
+            self.prompt = self.history[self.hist_pointer]
+        else:
+            self.hist_pointer = -1
+            self.terminal.delete(f"end - {len(self.prompt)+1} chars", "end-1c")
+            self.prompt = ""
+        self.paste_command(self.prompt)
+
 
     def on_mouse_wheel(self, event):
         scroll_speed = 2
@@ -134,7 +167,7 @@ class Terminal(ctk.CTk):
             file = open(f)
             for line in file.readlines():
                 self.paste_command(line.strip())
-                self.propmt = line                
+                self.prompt = line                
                 r = self.send_command()
                 if not r:
                     break
@@ -143,23 +176,29 @@ class Terminal(ctk.CTk):
 
     def paste_command(self,command:str):
         self.terminal.insert("end",command,"white_bold")
+        self.terminal.see("end")
 
     def key_grabber(self,event):
 
         if event.keysym == "Return":
-            self.send_command()
+            self.hist_pointer = -1
+            if not self.proc:
+                self.send_command()
+            else:
+                self.send_proc_input()
         elif event.keysym == "BackSpace":
-            if len(self.propmt) > 0:
-                self.propmt = self.propmt[:-1]
+            if len(self.prompt) > 0:
+                self.prompt = self.prompt[:-1]
                 self.terminal.delete("end-2c", "end-1c")
         else:
             if event.char:
-                self.propmt += event.char
+                self.prompt += event.char
                 self.terminal.insert("end", event.char)
         pass
 
-    def print_to_console(self,text:str):
-        self.terminal.insert("end",text+"\n")
+    def print_to_console(self,text:str,end="\n"):
+        self.terminal.insert("end",text+end)
+        self.terminal.see("end")
 
 
 
@@ -177,6 +216,8 @@ class Terminal(ctk.CTk):
             "tail": lambda: self.command_tail(args),
             "cat": lambda: self.command_cat(args),
             "mkdir": lambda: self.command_mkdir(args),
+            "pacman": lambda: self.command_pacman(args),
+            "python": lambda: self.command_python(args)
         }
 
         if command in commands_map:
@@ -192,22 +233,25 @@ class Terminal(ctk.CTk):
         self.print_to_console("- cd \t: changes current directory")
         self.print_to_console("- ls \t: lists files and directories in current")
         self.print_to_console("- pwd \t: prints absolute path for current directory")
+        self.print_to_console("- pacman \t: open packet manager app")
+        self.print_to_console("- python \t: runs python app (only with app)")
         self.print_to_console("- exit \t: disintegrate app")
         return True
 
     def send_command(self) -> bool:
         self.print_to_console("")
         r = False
-        parts = self.propmt.split()
+        parts = self.prompt.split()
+        self.history.append(self.prompt)
         if len(parts) > 0:
             args = []
             if len(parts) > 1:
                 args = parts[1:]
+            self.current_command = parts[0]
             r = self.execute(parts[0],args)
 
 
-
-        self.propmt = ""
+        self.prompt = ""
         self.line_starter()
         return r
 
@@ -235,6 +279,68 @@ class Terminal(ctk.CTk):
         }
         
         return True
+
+    def _run_proc(self,proc_args, args) -> bool:
+        self.prompt = ""
+        self.current_command = ""
+        proc = subprocess.Popen(
+            proc_args+args,
+            cwd=self.directory,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=0,
+        )
+        self.proc = proc
+        lines_queue = []
+        def run_proc():
+            while True:
+                char = proc.stdout.read(1)
+                if not char:
+                    break
+                lines_queue.append(char)
+        Thread(target=run_proc, daemon=True).start()
+
+        while proc.poll() is None:
+            while lines_queue:
+                line = lines_queue.pop(0)
+                self.print_to_console(line,"")
+
+            self.update()
+            time.sleep(0.01)
+        while lines_queue:
+            self.terminal.insert("end", lines_queue.pop(0))
+
+        self.proc = None
+        return proc.returncode == 0
+
+    def send_proc_input(self):
+        if not self.proc:
+            self.send_command()
+            return
+        self.print_to_console("")
+        try:
+            self.proc.stdin.write(self.prompt + "\n")
+            self.proc.stdin.flush()
+        except BrokenPipeError:
+            self.proc = None
+        self.prompt = ""
+
+    def command_pacman(self,args) -> bool:
+        if self.current_os == "Linux":
+            return self._run_proc(["python3", "pacman.py"],args)
+        else:
+            return self._run_proc(["python", "pacman.py"],args)
+
+    def command_python(self,args) -> bool:
+        if len(args) == 0:
+            self.print_to_console("Interactive python mode is disabled.")
+            return True
+        if self.current_os == "Linux":
+            return self._run_proc(["python3"],args)
+        else:
+            return self._run_proc(["python"],args)
 
     def command_cat(self,args) -> bool:
         if len(args) == 0: return False
@@ -301,6 +407,18 @@ class Terminal(ctk.CTk):
                 self.print_to_console(f"{d} not found")
                 return False
             return True
+        else:
+            return self._command_cd_nonvfs(args)
+
+    def _command_cd_nonvfs(self,args) -> bool:
+        d = args[0]
+        p = pathlib.Path(self.directory,d).resolve()
+        if p.exists():
+            self.directory = str(p)
+            return True
+        else:
+            self.print_to_console(f"{d} not found")
+            return False
 
 
     def command_ls(self) -> bool:
@@ -317,6 +435,7 @@ class Terminal(ctk.CTk):
         else:
             for file in pathlib.Path(self.directory).iterdir():
                 col = "white_bold"
+                f = ""
                 if file.is_dir():
                     col = "blue_bold"
                 if file.name.find(" ") == -1:
@@ -324,8 +443,7 @@ class Terminal(ctk.CTk):
                 else:
                     f"\"{file.name}\""
                 self.terminal.insert("end", f+" ",col)
-            if len(dir["children"]) > 0:
-                self.print_to_console("")
+            self.terminal.insert("end","\n")
         return True
 
     def line_starter(self):

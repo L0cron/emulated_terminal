@@ -1,0 +1,54 @@
+{
+    "1.6": [
+        {
+            "file": "dependencies.txt",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\dependencies.txt",
+            "size": "0"
+        },
+        {
+            "file": "junk0.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\junk0.bin",
+            "size": "7645"
+        },
+        {
+            "file": "junk1.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\junk1.bin",
+            "size": "31950"
+        },
+        {
+            "file": "junk2.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\junk2.bin",
+            "size": "5495"
+        },
+        {
+            "file": "junk3.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\junk3.bin",
+            "size": "43039"
+        },
+        {
+            "file": "junk4.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\junk4.bin",
+            "size": "4209"
+        },
+        {
+            "file": "junk5.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\junk5.bin",
+            "size": "6266"
+        },
+        {
+            "file": "junk6.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\junk6.bin",
+            "size": "22900"
+        },
+        {
+            "file": "junk7.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\junk7.bin",
+            "size": "38868"
+        },
+        {
+            "file": "manifest.json",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.6\\manifest.json",
+            "size": "2067"
+        }
+    ]
+}

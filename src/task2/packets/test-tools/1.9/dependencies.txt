@@ -1,0 +1,4 @@
+reqwest[1.29]
+json[>=1.7]
+binwalk[>=1.29]
+manip[1.1]

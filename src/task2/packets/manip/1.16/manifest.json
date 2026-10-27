@@ -1,0 +1,44 @@
+{
+    "1.16": [
+        {
+            "file": "dependencies.txt",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\manip\\1.16\\dependencies.txt",
+            "size": "17"
+        },
+        {
+            "file": "junk0.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\manip\\1.16\\junk0.bin",
+            "size": "34313"
+        },
+        {
+            "file": "junk1.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\manip\\1.16\\junk1.bin",
+            "size": "22275"
+        },
+        {
+            "file": "junk2.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\manip\\1.16\\junk2.bin",
+            "size": "38978"
+        },
+        {
+            "file": "junk3.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\manip\\1.16\\junk3.bin",
+            "size": "34968"
+        },
+        {
+            "file": "junk4.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\manip\\1.16\\junk4.bin",
+            "size": "1632"
+        },
+        {
+            "file": "junk5.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\manip\\1.16\\junk5.bin",
+            "size": "13114"
+        },
+        {
+            "file": "manifest.json",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\manip\\1.16\\manifest.json",
+            "size": "1634"
+        }
+    ]
+}

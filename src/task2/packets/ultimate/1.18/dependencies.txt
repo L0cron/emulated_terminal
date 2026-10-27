@@ -1,0 +1,4 @@
+test-tools[1.26]
+iplist[>=1.8]
+json[>=1.23]
+reqwest[1.5]

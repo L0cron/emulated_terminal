@@ -1,0 +1,64 @@
+{
+    "1.19": [
+        {
+            "file": "dependencies.txt",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\dependencies.txt",
+            "size": "0"
+        },
+        {
+            "file": "junk0.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk0.bin",
+            "size": "42842"
+        },
+        {
+            "file": "junk1.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk1.bin",
+            "size": "48123"
+        },
+        {
+            "file": "junk2.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk2.bin",
+            "size": "31284"
+        },
+        {
+            "file": "junk3.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk3.bin",
+            "size": "22444"
+        },
+        {
+            "file": "junk4.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk4.bin",
+            "size": "27369"
+        },
+        {
+            "file": "junk5.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk5.bin",
+            "size": "20420"
+        },
+        {
+            "file": "junk6.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk6.bin",
+            "size": "38400"
+        },
+        {
+            "file": "junk7.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk7.bin",
+            "size": "8180"
+        },
+        {
+            "file": "junk8.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk8.bin",
+            "size": "1993"
+        },
+        {
+            "file": "junk9.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\junk9.bin",
+            "size": "14214"
+        },
+        {
+            "file": "manifest.json",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\path-utils\\1.19\\manifest.json",
+            "size": "2488"
+        }
+    ]
+}

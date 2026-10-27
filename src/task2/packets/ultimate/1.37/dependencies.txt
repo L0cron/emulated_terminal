@@ -1,0 +1,4 @@
+random[>=1.42]
+binwalk[>=1.24]
+path-utils[>=1.48]
+reqwest[>=1.24]

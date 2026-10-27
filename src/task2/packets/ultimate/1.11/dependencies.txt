@@ -1,0 +1,4 @@
+test-tools[1.17]
+reqwest[>=1.7]
+iplist[>=1.18]
+random[1.35]

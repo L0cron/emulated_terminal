@@ -1,0 +1,3 @@
+manip[1.22]
+binwalk[1.5]
+iplist[>=1.8]

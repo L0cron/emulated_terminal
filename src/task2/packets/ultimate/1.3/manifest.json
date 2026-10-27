@@ -1,0 +1,49 @@
+{
+    "1.3": [
+        {
+            "file": "dependencies.txt",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\dependencies.txt",
+            "size": "94"
+        },
+        {
+            "file": "junk0.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\junk0.bin",
+            "size": "42318"
+        },
+        {
+            "file": "junk1.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\junk1.bin",
+            "size": "38451"
+        },
+        {
+            "file": "junk2.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\junk2.bin",
+            "size": "9853"
+        },
+        {
+            "file": "junk3.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\junk3.bin",
+            "size": "22052"
+        },
+        {
+            "file": "junk4.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\junk4.bin",
+            "size": "31368"
+        },
+        {
+            "file": "junk5.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\junk5.bin",
+            "size": "39109"
+        },
+        {
+            "file": "junk6.bin",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\junk6.bin",
+            "size": "8771"
+        },
+        {
+            "file": "manifest.json",
+            "dl": "C:\\Users\\locron\\Desktop\\emulated_terminal\\src\\task2\\packets\\ultimate\\1.3\\manifest.json",
+            "size": "1641"
+        }
+    ]
+}
