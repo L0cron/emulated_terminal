@@ -194,6 +194,7 @@ class Terminal(ctk.CTk):
             if event.char:
                 self.prompt += event.char
                 self.terminal.insert("end", event.char)
+                self.terminal.see("end")
         pass
 
     def print_to_console(self,text:str,end="\n"):

@@ -57,16 +57,52 @@ class Packet_manager():
             case _:print("Unknown command specified:",
                     self.command,"\nProgram will exit now.")
 
+    def sort_versions(self, packet: dict) -> list[str]:
+        versions_dict = next(iter(packet.values()))
+        
+        version_strings = list(versions_dict.keys())
+        
+        sorted_versions = sorted(
+            version_strings, 
+            key=lambda v_str: [int(part) for part in v_str.split(".")]
+        )
+        
+        return sorted_versions
+
     def update_indexes(self):
         print(f"    Updating {self.download_repo} index")
         r = requests.get(self.download_repo,timeout=10)
         r.raise_for_status()
         self.indexes = r.json()
-        print(self.indexes)
         print(f"    Updated indexes successfully")
+
+    def split_packet(self,packet_with_version:str):
+        packet = packet_with_version
+        version = None
+        if packet.find("[") != -1:
+            p = packet.split("[")
+            packet = p[0]
+            version = p[1][:-1]
+        return (packet,version)
+
 
     def install_packets(self):
         self.update_indexes()
+        for p in self.packets:
+            print(f"    Indexing {p}")
+            print(self.indexes)
+            packet,version = self.split_packet(p)
+            if p in self.indexes:
+                # TODO: VERSION IS NONE
+                if version in self.indexes[packet]:
+                    print(f"  Downloading {packet}")
+                else:
+                    if version:
+                        print(f"      FAIL {packet} with version {version} Not found")
+                    else:
+                        print(f"      FAIL {packet} with version ANY Not found")
+            else:
+                print(f"      FAIL {packet} Not found")
 
     def uninstall_packets(self):
         self.update_indexes()
