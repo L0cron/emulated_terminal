@@ -1,2 +1,8 @@
 */venv
 src/task2/installed/*
+**/__pycache__
+tasks/
+*.bin
+.vscode/
+/src/task2/venv
+/src/task2/packets/*

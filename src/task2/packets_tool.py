@@ -4,11 +4,11 @@ from pathlib import Path
 import json
 import random
 import os
-from itertools import product
 
-packets_dir = Path("./packets").resolve()
+packets_dir = Path(__file__).resolve().parent / "packets"
 
 def manifest_version(packet_name:str, version:str):
+    """Write a file listing for a custom package release."""
     global packets_dir
     print(f"    Creating manifest for {packet_name} ({version})...")
     added = 0
@@ -22,28 +22,37 @@ def manifest_version(packet_name:str, version:str):
                 "size":str(f.stat().st_size)
             })
             added+=1
-    f = open(str(p.resolve())+"\\manifest.json","w")
-    json.dump(data,f,ensure_ascii=False,indent=4)
+    with (p / "manifest.json").open("w", encoding="utf-8") as manifest:
+        json.dump(data, manifest, ensure_ascii=False, indent=4)
     print(f"    [Done] Added {added} files")
 
 def add_random_to_packet(packet_name:str,ver:str,c=1):
+    """Generate local binary samples for a custom package."""
     global packets_dir
     p = Path(packets_dir/packet_name/ver)
-    KB50_BYTES = 1024 * 50
+    max_file_bytes = 1024 * 50
     for i in range(c):
-        random_size = random.randint(1024, KB50_BYTES)
+        random_size = random.randint(1024, max_file_bytes)
         file_path = p / f"junk{i}.bin"
         file_path.write_bytes(os.urandom(random_size))
 
 def make_packet(packet_name:str, base_version: str):
+    """Create a package directory with a Cargo manifest."""
     global packets_dir
-    print(f"Creating packet {name} ({base_version})...")
+    print(f"Creating packet {packet_name} ({base_version})...")
     p = Path(packets_dir / packet_name / base_version)
     p.mkdir(exist_ok=True,parents=True)
-    open(Path(p,"dependencies.txt"),"a").close()
+    cargo = (
+        "[package]\n"
+        f'name = "{packet_name}"\n'
+        f'version = "{base_version}"\n\n'
+        "[dependencies]\n"
+    )
+    (p / "Cargo.toml").write_text(cargo, encoding="utf-8")
     print(f"Created {packet_name} ({base_version})")
 
 def index_version(packet_name:str, version:str) -> dict|None:
+    """Check whether the custom release directory exists."""
     global packets_dir
     p = Path(packets_dir / packet_name / version)
     if not p.exists():
@@ -51,6 +60,7 @@ def index_version(packet_name:str, version:str) -> dict|None:
         return None
 
 def random_versions(count = 10) -> list[str]:
+    """Generate distinct numeric version strings."""
     numbers = []
     if count <= 0: return []
     while len(numbers) != count:
@@ -62,8 +72,9 @@ def random_versions(count = 10) -> list[str]:
     return vers
 
 def index_packet(packet_name:str)->dict:
+    """List release directories and generate their manifests."""
     global packets_dir
-    print(f"  - Indexing {p}")
+    print(f"  - Indexing {packet_name}")
     packet_path = Path(packets_dir / packet_name)
     vers = []
 
@@ -75,40 +86,40 @@ def index_packet(packet_name:str)->dict:
     return vers
 
 def random_dependencies(name:str, ver:str):
+    """Choose random dependencies for a custom release."""
     global packets_dir
     packets_path = Path(packets_dir)
     p = packets_path / name / ver
-    
-    # Открываем через pathlib (автоматически закроется и подставит правильные слэши)
-    dependencies_file = p / "dependencies.txt"
-    
-    # 1. Получаем список ВСЕХ пакетов, но фильтруем его, чтобы избежать циклов
-    # Защита: пакет может зависеть только от тех, чьё имя "меньше" его по алфавиту
-    all_packets = [d for d in packets_path.iterdir() if d.is_dir() and d.name < name]
-
-    # Если доступных пакетов нет, пишем пустой файл и выходим
+    cargo_file = p / "Cargo.toml"
+    all_packets = [d for d in packets_path.iterdir()
+                   if d.is_dir() and d.name < name]
     if not all_packets:
-        dependencies_file.write_text("")
+        write_cargo(name, ver, [])
         return
-
     count = random.randint(0, min(7, len(all_packets)))
     dep = random.sample(all_packets, count)
-    
     lines = []
     for d in dep:
-        # Берем случайную версию выбранного пакета
         vers = [v for v in d.iterdir() if v.is_dir()]
         if not vers:
             continue
         v = random.choice(vers)
-        
-        # Генерируем строку манифеста
+
         if random.randint(0, 1) == 1:
-            lines.append(f"{d.name}[>={v.name}]\n")
+            lines.append(f'{d.name} = ">={v.name}"\n')
         else:
-            lines.append(f"{d.name}[{v.name}]\n")
-    dependencies_file.write_text("".join(lines), encoding="utf-8")
+            lines.append(f'{d.name} = "={v.name}"\n')
+    write_cargo(name, ver, lines)
     print(f"Done for {name} v{ver}. Added random deps")
+
+def write_cargo(name: str, version: str, dependencies: list[str]):
+    """Write package metadata and dependencies as Cargo TOML."""
+    cargo = (
+        f'[package]\nname = "{name}"\nversion = "{version}"\n\n'
+        "[dependencies]\n" + "".join(dependencies)
+    )
+    path = packets_dir / name / version / "Cargo.toml"
+    path.write_text(cargo, encoding="utf-8")
 
 
 if __name__ == "__main__":
@@ -125,8 +136,10 @@ if __name__ == "__main__":
             packets = {}
             for p in itdir:
                 packets[p.name] = index_packet(p.name)
-            out = open("./index.json","w")
-            json.dump(packets,out,ensure_ascii=False,indent=4)      
+            with (packets_dir.parent / "index.json").open(
+                "w", encoding="utf-8"
+            ) as out:
+                json.dump(packets, out, ensure_ascii=False, indent=4)
             print("[Done] All packets indexed.")
         case "update":
             pass
@@ -136,11 +149,8 @@ if __name__ == "__main__":
             make_packet(name, base_ver)
 
             print("Done. TIP:")
-            print("Added dependencies.txt file, you can list "\
-            "all dependencies there. To properly specify version "\
-            "follow next format: <packet>[ver]. You can also use "\
-            "comparison symbols: <packet>[>=ver] or between "\
-            "<packet>[ver1-ver2]")
+            print("Added Cargo.toml file. List dependencies in "\
+            "[dependencies] using Cargo version requirements.")
         case "random":
             print("Info: This will create random packet")
             name = input("Select random packet name > ")

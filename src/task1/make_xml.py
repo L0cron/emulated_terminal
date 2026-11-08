@@ -5,6 +5,7 @@ from xml.dom import minidom
 
 
 def build_vfs_xml(target_dir_path, output_xml_path):
+    """Encode a directory tree and its files into an XML VFS."""
     target_path = Path(target_dir_path).resolve()
     root = et.Element("vfs", name=target_path.name)
     vfs_root_dir = et.SubElement(root, "dir", name="/")
