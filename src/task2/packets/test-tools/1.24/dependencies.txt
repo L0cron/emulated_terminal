@@ -1,5 +1,0 @@
-binwalk[1.8]
-manip[1.1]
-random[1.0]
-reqwest[>=1.29]
-path-utils[>=1.30]

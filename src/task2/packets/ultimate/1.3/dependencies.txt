@@ -1,6 +1,0 @@
-test-tools[>=1.3]
-path-utils[1.6]
-random[1.35]
-reqwest[>=1.23]
-manip[>=1.1]
-iplist[1.0]

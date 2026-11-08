@@ -1,6 +1,0 @@
-random[1.45]
-iplist[>=1.0]
-path-utils[1.21]
-json[>=1.28]
-manip[>=1.25]
-reqwest[>=1.29]

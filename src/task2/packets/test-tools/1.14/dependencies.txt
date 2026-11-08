@@ -1,3 +1,0 @@
-json[1.23]
-reqwest[>=1.12]
-random[>=1.42]

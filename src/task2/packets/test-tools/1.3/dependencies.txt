@@ -1,7 +1,0 @@
-iplist[1.8]
-manip[1.34]
-json[>=1.23]
-path-utils[1.39]
-random[1.0]
-binwalk[1.0]
-reqwest[>=1.10]
