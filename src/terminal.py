@@ -242,7 +242,7 @@ class Terminal(ctk.CTk):
             "tail": lambda: self.command_tail(args),
             "cat": lambda: self.command_cat(args),
             "mkdir": lambda: self.command_mkdir(args),
-            "pacman": lambda: self.command_pacman(args),
+            "cargo": lambda: self.command_cargo(args),
             "python": lambda: self.command_python(args)
         }
 
@@ -261,7 +261,7 @@ class Terminal(ctk.CTk):
         self.print_to_console("- ls \t: lists files and directories in current")
         self.print_to_console(
             "- pwd \t: prints absolute path for current directory")
-        self.print_to_console("- pacman \t: open packet manager app")
+        self.print_to_console("- cargo \t: open Cargo dependency analyzer")
         self.print_to_console("- python \t: runs python app (only with app)")
         self.print_to_console("- exit \t: disintegrate app")
         return True
@@ -371,12 +371,12 @@ class Terminal(ctk.CTk):
             self.proc = None
         self.prompt = ""
 
-    def command_pacman(self,args) -> bool:
+    def command_cargo(self,args) -> bool:
         """Launch the package dependency analyzer."""
         if self.current_os == "Linux":
-            return self._run_proc(["python3", "pacman.py"],args)
+            return self._run_proc(["python3", "cargo.py"],args)
         else:
-            return self._run_proc(["python", "pacman.py"],args)
+            return self._run_proc(["python", "cargo.py"],args)
 
     def command_python(self,args) -> bool:
         """Run a Python script in a subprocess."""
