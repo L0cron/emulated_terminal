@@ -7,3 +7,4 @@ tasks/
 .vscode/
 /src/task2/venv
 /src/task2/packets/*
+*.pdf
